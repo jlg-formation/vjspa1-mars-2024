@@ -1,5 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-  <p>Home works!</p>
+  <main>
+    <h1>Gérez efficacement votre stock !</h1>
+    <RouterLink to="/stock">Voir le stock</RouterLink>
+  </main>
 </template>
