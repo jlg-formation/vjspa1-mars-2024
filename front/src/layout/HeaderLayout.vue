@@ -11,6 +11,7 @@
 header {
   background: #eee;
   height: 3em;
+  padding: 0 0.5em;
 
   display: flex;
   align-items: center;
