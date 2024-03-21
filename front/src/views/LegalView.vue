@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <p>Home works!</p>
+  <p>Legal works!</p>
 </template>
