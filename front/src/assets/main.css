@@ -1,5 +1,9 @@
 @import '../../node_modules/normalize.css/normalize.css';
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: sans-serif;
 }
@@ -10,4 +14,26 @@ body {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
+}
+
+main {
+  flex: 1;
+
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+
+  width: 100%;
+  max-width: 100ch;
+  margin: 0 auto;
+
+  padding: 0.5em;
+
+  p {
+    width: 100%;
+  }
+
+  h1 {
+    text-align: center;
+  }
 }
