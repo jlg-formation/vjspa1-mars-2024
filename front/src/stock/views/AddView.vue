@@ -18,7 +18,37 @@
         <span class="error"></span>
       </label>
       <div class="error"></div>
-      <button>Ajouter</button>
+      <button class="primary">Ajouter</button>
     </form>
   </main>
 </template>
+
+<style scoped>
+form {
+  display: flex;
+  flex-flow: column;
+  gap: 0.5em;
+
+  width: 100%;
+  max-width: 25em;
+
+  label {
+    display: flex;
+    flex-flow: column;
+
+    input {
+      padding: 0.5em 1em;
+      border: 0.1em solid #aaa;
+      border-radius: 0.3em;
+    }
+
+    span.error {
+      height: 1em;
+    }
+  }
+
+  div.error {
+    height: 3em;
+  }
+}
+</style>
