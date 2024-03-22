@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { faRotateRight, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { type Article } from '../interfaces/Article'
+
+const articles: Article[] = [
+  { id: 'a1', name: 'Tournevis', price: 2.99, qty: 45 },
+  { id: 'a2', name: 'Pelle', price: 12.99, qty: 445 }
+]
 </script>
+
 <template>
   <main>
     <h1>Liste des articles</h1>
@@ -27,25 +34,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="name">Tournevis</td>
-            <td class="price">2.56 €</td>
-            <td class="qty">123</td>
-          </tr>
-          <tr>
-            <td class="name">Pelle</td>
-            <td class="price">2.56 €</td>
-            <td class="qty">123</td>
-          </tr>
-          <tr>
-            <td class="name">Pioche</td>
-            <td class="price">2.56 €</td>
-            <td class="qty">123</td>
-          </tr>
-          <tr>
-            <td class="name">Marteau</td>
-            <td class="price">2.56 €</td>
-            <td class="qty">123</td>
+          <tr v-for="a in articles" :key="a.id">
+            <td class="name">{{ a.name }}</td>
+            <td class="price">{{ a.price }} €</td>
+            <td class="qty">{{ a.qty }}</td>
           </tr>
         </tbody>
       </table>
