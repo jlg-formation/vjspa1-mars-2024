@@ -1,13 +1,28 @@
 <script setup lang="ts">
-import { faPlus, faRotateRight, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCircleNotch, faPlus, faRotateRight, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { onMounted, ref } from 'vue'
 import { type Article } from '../interfaces/Article'
 import { useArticleStore } from '../store/articleStore'
 
+const errorMsg = ref('')
+const isRefreshing = ref(false)
+
 const articleStore = useArticleStore()
 
 const selectedArticles = ref<Set<Article['id']>>(new Set())
+
+const handleRefresh = async () => {
+  try {
+    errorMsg.value = ''
+    isRefreshing.value = true
+    await articleStore.refresh()
+  } catch (err) {
+    errorMsg.value = 'Oups... Erreur technique.'
+  } finally {
+    isRefreshing.value = false
+  }
+}
 
 const handleSelect = (a: Article) => {
   console.log('a: ', a)
@@ -22,10 +37,14 @@ const handleRemove = () => {
   articleStore.remove([...selectedArticles.value])
 }
 
-onMounted(() => {
-  console.log('onMounted')
-  if (articleStore.articles === undefined) {
-    articleStore.refresh()
+onMounted(async () => {
+  try {
+    console.log('onMounted')
+    if (articleStore.articles === undefined) {
+      await articleStore.refresh()
+    }
+  } catch (err) {
+    errorMsg.value = 'Oups... Erreur technique.'
   }
 })
 </script>
@@ -35,8 +54,11 @@ onMounted(() => {
     <h1>Liste des articles</h1>
     <div class="content">
       <nav>
-        <button title="Rafraîchir" @click="articleStore.refresh">
-          <FontAwesomeIcon :icon="faRotateRight" />
+        <button title="Rafraîchir" @click="handleRefresh" :disabled="isRefreshing">
+          <FontAwesomeIcon
+            :spin="isRefreshing"
+            :icon="isRefreshing ? faCircleNotch : faRotateRight"
+          />
         </button>
         <RouterLink to="/stock/add" class="button" title="Ajouter">
           <FontAwesomeIcon :icon="faPlus" />
@@ -45,7 +67,9 @@ onMounted(() => {
           <FontAwesomeIcon :icon="faTrashAlt" />
         </button>
       </nav>
-      <div class="error"></div>
+      <div class="error">
+        {{ errorMsg }}
+      </div>
       <table>
         <thead>
           <tr>
@@ -79,6 +103,7 @@ nav {
 
 div.error {
   height: 2em;
+  font-weight: bold;
 }
 
 table {

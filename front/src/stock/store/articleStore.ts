@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Article, NewArticle } from '../interfaces/Article'
+import { api } from '../api'
 
 export const useArticleStore = defineStore('articleStore', () => {
   const articles = ref<Article[] | undefined>(undefined)
@@ -12,11 +13,8 @@ export const useArticleStore = defineStore('articleStore', () => {
     return articles.value.length
   })
 
-  const refresh = () => {
-    articles.value = [
-      { id: 'a1', name: 'Tournevis', price: 2.99, qty: 45 },
-      { id: 'a2', name: 'Pelle', price: 12.99, qty: 445 }
-    ]
+  const refresh = async () => {
+    articles.value = await api.getArticles()
   }
 
   const add = (newArticle: NewArticle) => {
