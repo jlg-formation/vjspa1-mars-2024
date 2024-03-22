@@ -44,7 +44,6 @@ const handleSubmit = () => {
         <span>Ajouter</span>
       </button>
     </form>
-    {{ newArticle }}
   </main>
 </template>
 
