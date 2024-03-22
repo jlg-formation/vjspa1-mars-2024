@@ -24,7 +24,7 @@ export const useArticleStore = defineStore('articleStore', () => {
     if (articles.value === undefined) {
       throw new Error('cannot add articles if not refreshed first')
     }
-    articles.value.push({ ...newArticle, id: 'xxx' })
+    articles.value.push({ ...newArticle, id: window.crypto.randomUUID() })
   }
 
   const remove = (ids: Article['id'][]) => {
