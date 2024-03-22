@@ -5,7 +5,7 @@ import FooterLayout from './layout/FooterLayout.vue'
 </script>
 
 <template>
-  <HeaderLayout></HeaderLayout>
+  <HeaderLayout label="Gestion Stock"></HeaderLayout>
   <BodyLayout />
   <FooterLayout />
 </template>
