@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import type { NewArticle } from '../interfaces/Article'
+import { ref } from 'vue'
+
+const newArticle = ref<NewArticle>({ name: 'xxx', price: 0, qty: 0 })
 </script>
 
 <template>
@@ -9,17 +13,17 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     <form>
       <label>
         <span>Nom</span>
-        <input type="text" />
+        <input type="text" v-model="newArticle.name" />
         <span class="error"></span>
       </label>
       <label>
         <span>Prix</span>
-        <input type="number" />
+        <input type="number" v-model="newArticle.price" />
         <span class="error"></span>
       </label>
       <label>
         <span>Quantité</span>
-        <input type="number" />
+        <input type="number" v-model="newArticle.qty" />
         <span class="error"></span>
       </label>
       <div class="error"></div>
@@ -28,6 +32,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
         <span>Ajouter</span>
       </button>
     </form>
+    {{ newArticle }}
   </main>
 </template>
 
