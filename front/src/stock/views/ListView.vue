@@ -13,7 +13,7 @@ const articleStore = useArticleStore()
     <h1>Liste des articles</h1>
     <div class="content">
       <nav>
-        <button title="Rafraîchir">
+        <button title="Rafraîchir" @click="articleStore.refresh">
           <FontAwesomeIcon :icon="faRotateRight" />
         </button>
         <RouterLink to="/stock/add" class="button" title="Ajouter">
