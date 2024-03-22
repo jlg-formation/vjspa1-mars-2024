@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { faPlus, faRotateRight, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { type Article } from '../interfaces/Article'
 import { useArticleStore } from '../store/articleStore'
 
@@ -21,6 +21,13 @@ const handleSelect = (a: Article) => {
 const handleRemove = () => {
   articleStore.remove([...selectedArticles.value])
 }
+
+onMounted(() => {
+  console.log('onMounted')
+  if (articleStore.articles === undefined) {
+    articleStore.refresh()
+  }
+})
 </script>
 
 <template>
