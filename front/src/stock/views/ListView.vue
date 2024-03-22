@@ -6,6 +6,17 @@ import { ref, type Ref } from 'vue'
 import { useArticleStore } from '../store/articleStore'
 
 const articleStore = useArticleStore()
+
+const selectedArticles = ref<Set<Article['id']>>(new Set())
+
+const handleSelect = (a: Article) => {
+  console.log('a: ', a)
+  if (selectedArticles.value.has(a.id)) {
+    selectedArticles.value.delete(a.id)
+    return
+  }
+  selectedArticles.value.add(a.id)
+}
 </script>
 
 <template>
@@ -33,7 +44,12 @@ const articleStore = useArticleStore()
           </tr>
         </thead>
         <tbody>
-          <tr v-for="a in articleStore.articles" :key="a.id">
+          <tr
+            v-for="a in articleStore.articles"
+            :key="a.id"
+            @click="handleSelect(a)"
+            :class="{ selected: selectedArticles.has(a.id) }"
+          >
             <td class="name">{{ a.name }}</td>
             <td class="price">{{ a.price }} €</td>
             <td class="qty">{{ a.qty }}</td>
