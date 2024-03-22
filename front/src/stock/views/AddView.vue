@@ -12,9 +12,9 @@ const articleStore = useArticleStore()
 
 const router = useRouter()
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   console.log('submit form')
-  articleStore.add(newArticle.value)
+  await articleStore.add(newArticle.value)
   router.push('/stock')
 }
 </script>

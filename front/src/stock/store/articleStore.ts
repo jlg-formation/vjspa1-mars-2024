@@ -17,20 +17,14 @@ export const useArticleStore = defineStore('articleStore', () => {
     articles.value = await api.getArticles()
   }
 
-  const add = (newArticle: NewArticle) => {
-    console.log('adding article')
-    if (articles.value === undefined) {
-      throw new Error('cannot add articles if not refreshed first')
-    }
-    articles.value.push({ ...newArticle, id: window.crypto.randomUUID() })
+  const add = async (newArticle: NewArticle) => {
+    await api.add(newArticle)
+    articles.value = await api.getArticles()
   }
 
-  const remove = (ids: Article['id'][]) => {
-    console.log('remove article')
-    if (articles.value === undefined) {
-      throw new Error('cannot remove  articles if not refreshed first')
-    }
-    articles.value = articles.value.filter((a) => !ids.includes(a.id))
+  const remove = async (ids: Article['id'][]) => {
+    await api.remove(ids)
+    articles.value = await api.getArticles()
   }
 
   return { articles, articleTotal, refresh, remove, add }
