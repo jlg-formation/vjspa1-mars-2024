@@ -3,14 +3,26 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import type { NewArticle } from '../interfaces/Article'
 import { ref } from 'vue'
+import { useArticleStore } from '../store/articleStore'
+import { useRouter } from 'vue-router'
 
 const newArticle = ref<NewArticle>({ name: 'xxx', price: 0, qty: 0 })
+
+const articleStore = useArticleStore()
+
+const router = useRouter()
+
+const handleSubmit = () => {
+  console.log('submit form')
+  articleStore.add(newArticle.value)
+  router.push('/stock')
+}
 </script>
 
 <template>
   <main>
     <h1>Ajouter un article</h1>
-    <form>
+    <form @submit.prevent="handleSubmit">
       <label>
         <span>Nom</span>
         <input type="text" v-model="newArticle.name" />
