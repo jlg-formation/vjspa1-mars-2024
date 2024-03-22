@@ -27,8 +27,9 @@ const handleSelect = (a: Article) => {
   selectedArticles.value.add(a.id)
 }
 
-const handleRemove = () => {
-  articleStore.remove([...selectedArticles.value])
+const handleRemove = async () => {
+  await articleStore.remove([...selectedArticles.value])
+  selectedArticles.value.clear()
 }
 
 const resetErrorMsg = () => {
@@ -68,9 +69,15 @@ onMounted(async () => {
         <RouterLink to="/stock/add" class="button" title="Ajouter">
           <FontAwesomeIcon :icon="faPlus" />
         </RouterLink>
-        <button title="Supprimer" :hidden="selectedArticles.size === 0" @click="handleRemove">
-          <FontAwesomeIcon :icon="faTrashAlt" />
-        </button>
+
+        <AsyncBtn
+          :hidden="selectedArticles.size === 0"
+          label="Supprimer"
+          :action="handleRemove"
+          :icon="faTrashAlt"
+          @onstart="resetErrorMsg"
+          @onerror="setErrorMsg"
+        />
       </nav>
       <div class="error">
         {{ errorMsg }}
