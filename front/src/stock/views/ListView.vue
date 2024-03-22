@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { faRotateRight, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faRotateRight, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { ref } from 'vue'
 import { type Article } from '../interfaces/Article'
-import { ref, type Ref } from 'vue'
 import { useArticleStore } from '../store/articleStore'
 
 const articleStore = useArticleStore()
