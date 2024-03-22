@@ -17,6 +17,10 @@ const handleSelect = (a: Article) => {
   }
   selectedArticles.value.add(a.id)
 }
+
+const handleRemove = () => {
+  articleStore.remove([...selectedArticles.value])
+}
 </script>
 
 <template>
@@ -30,7 +34,7 @@ const handleSelect = (a: Article) => {
         <RouterLink to="/stock/add" class="button" title="Ajouter">
           <FontAwesomeIcon :icon="faPlus" />
         </RouterLink>
-        <button title="Supprimer" :hidden="selectedArticles.size === 0">
+        <button title="Supprimer" :hidden="selectedArticles.size === 0" @click="handleRemove">
           <FontAwesomeIcon :icon="faTrashAlt" />
         </button>
       </nav>
