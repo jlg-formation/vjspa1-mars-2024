@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { faCircleNotch, faPlus, faRotateRight, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faRotateRight, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { onMounted, ref } from 'vue'
+import AsyncBtn from '../../components/AsyncBtn.vue'
 import { type Article } from '../interfaces/Article'
 import { useArticleStore } from '../store/articleStore'
-import AsyncBtn from '../../components/AsyncBtn.vue'
 
 const errorMsg = ref('')
 
@@ -13,14 +13,9 @@ const articleStore = useArticleStore()
 const selectedArticles = ref<Set<Article['id']>>(new Set())
 
 const handleRefresh = async () => {
-  try {
-    console.log('handleRefresh')
-    errorMsg.value = ''
-    await articleStore.refresh()
-    console.log('handleRefresh finished')
-  } catch (err) {
-    errorMsg.value = 'Oups... Erreur technique.'
-  }
+  console.log('handleRefresh')
+  await articleStore.refresh()
+  console.log('handleRefresh finished')
 }
 
 const handleSelect = (a: Article) => {
@@ -34,6 +29,16 @@ const handleSelect = (a: Article) => {
 
 const handleRemove = () => {
   articleStore.remove([...selectedArticles.value])
+}
+
+const resetErrorMsg = () => {
+  console.log('reset error')
+  errorMsg.value = ''
+}
+
+const setErrorMsg = (msg: string) => {
+  console.log('set error')
+  errorMsg.value = msg
 }
 
 onMounted(async () => {
@@ -53,7 +58,13 @@ onMounted(async () => {
     <h1>Liste des articles</h1>
     <div class="content">
       <nav>
-        <AsyncBtn label="Rafraîchir" :action="handleRefresh" :icon="faRotateRight" />
+        <AsyncBtn
+          label="Rafraîchir"
+          :action="handleRefresh"
+          :icon="faRotateRight"
+          @onstart="resetErrorMsg"
+          @onerror="setErrorMsg"
+        />
         <RouterLink to="/stock/add" class="button" title="Ajouter">
           <FontAwesomeIcon :icon="faPlus" />
         </RouterLink>
