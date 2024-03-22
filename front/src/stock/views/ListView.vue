@@ -2,11 +2,10 @@
 import { faRotateRight, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { type Article } from '../interfaces/Article'
+import { ref, type Ref } from 'vue'
+import { useArticleStore } from '../store/articleStore'
 
-const articles: Article[] = [
-  { id: 'a1', name: 'Tournevis', price: 2.99, qty: 45 },
-  { id: 'a2', name: 'Pelle', price: 12.99, qty: 445 }
-]
+const articleStore = useArticleStore()
 </script>
 
 <template>
@@ -34,7 +33,7 @@ const articles: Article[] = [
           </tr>
         </thead>
         <tbody>
-          <tr v-for="a in articles" :key="a.id">
+          <tr v-for="a in articleStore.articles" :key="a.id">
             <td class="name">{{ a.name }}</td>
             <td class="price">{{ a.price }} €</td>
             <td class="qty">{{ a.qty }}</td>
